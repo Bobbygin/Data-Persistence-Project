@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
+    public static MainManager instance;
+
+    private string name;
+    private int score;
+    public Text scoreText1;
+
+
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -22,6 +29,8 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+        scoreText1.text = "Best Score:"+" Name: " + name;
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
