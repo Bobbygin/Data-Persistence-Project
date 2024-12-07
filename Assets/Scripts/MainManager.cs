@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
+using System;
 public class MainManager : MonoBehaviour
 {
     public static MainManager Instance;
@@ -34,6 +35,7 @@ public class MainManager : MonoBehaviour
     {
         addName.SetActive(false);
         LoadScore();
+        scoreText1.text = "Best Score: " + bestScore + " Name: " + name1;
         if (Instance != null)
         {
             Destroy(gameObject);
@@ -74,7 +76,7 @@ public class MainManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 m_Started = true;
-                float randomDirection = Random.Range(-1.0f, 1.0f);
+                float randomDirection = UnityEngine.Random.Range(-1.0f, 1.0f);
                 Vector3 forceDir = new Vector3(randomDirection, 1, 0);
                 forceDir.Normalize();
 
@@ -111,6 +113,7 @@ public class MainManager : MonoBehaviour
     public void Name() {
         name1 = InputField.text;
         scoreText1.text = "Best Score: " + bestScore + " Name: " + name1;
+        addName.SetActive(false);
     }
     [System.Serializable]
     class SaveData
@@ -123,6 +126,7 @@ public class MainManager : MonoBehaviour
         SaveData data = new SaveData();
         data.score = bestScore;
         data.name = name1;
+        Debug.Log(data.name);
         string json = JsonUtility.ToJson(data);
 
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
@@ -138,6 +142,7 @@ public class MainManager : MonoBehaviour
 
             bestScore = data.score;
             name1 = data.name;
+            
         }
     }
 }
